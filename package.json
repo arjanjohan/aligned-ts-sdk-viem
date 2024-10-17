@@ -1,7 +1,7 @@
 {
-  "name": "aligned-ts",
+  "name": "aligned-ts-viem",
   "version": "0.0.9",
-  "description": "Aligned SDK in TypeScript",
+  "description": "Aligned SDK in TypeScript using viem",
   "main": "src/index.ts",
   "type": "module",
   "exports": {
@@ -13,7 +13,7 @@
     "test": "node --import tsx --test tests/**/*test.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "arjanjohan",
   "license": "ISC",
   "devDependencies": {
     "@types/keccak": "^3.0.4",
@@ -25,6 +25,7 @@
   "dependencies": {
     "ethers": "^6.13.1",
     "sha3": "^2.1.4",
+    "viem": "^2.21.28",
     "ws": "^8.18.0"
   }
 }
