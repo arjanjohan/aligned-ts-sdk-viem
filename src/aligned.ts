@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { Constants } from "./constants.js";
 import {
   Aligned,
@@ -14,6 +13,7 @@ import WebSocket from "ws";
 import { Keccak } from "sha3";
 import { verifyMerklePath } from "./merkle-proof.js";
 import { verifyProofOnchain } from "./eth.js";
+import { WalletClient, createWalletClient, createPublicClient, http, PublicClient } from 'viem'
 
 export { getAligned };
 
@@ -31,11 +31,11 @@ const getAligned = (address?: string): Aligned => {
     setCurrentBatcherAddress: (address: string) => {
       currentInstance = address;
     },
-    submit: async (verificationData: VerificationData, wallet: ethers.Wallet) =>
+    submit: async (verificationData: VerificationData, wallet: WalletClient) =>
       (await submitMultiple([verificationData], wallet, currentInstance))[0],
     submitMultiple: (
       verificationData: Array<VerificationData>,
-      wallet: ethers.Wallet
+      wallet: WalletClient
     ) => submitMultiple(verificationData, wallet, currentInstance),
     getExplorerLink: (batchMerkleRoot: Uint8Array) =>
       `https://explorer.alignedlayer.com/batches/0x${Buffer.from(
@@ -51,7 +51,7 @@ const getAligned = (address?: string): Aligned => {
 
 const submitMultiple = async (
   verificationData: Array<VerificationData>,
-  wallet: ethers.Wallet,
+  wallet: WalletClient,
   instance: string
 ) => {
   // check protocol version match
