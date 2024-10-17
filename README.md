@@ -1,14 +1,14 @@
 <div align="center">
 <br>
 <img style="align: center" src="./logo.png" height=256/>
-<h1>Aligned TS</h1>
-<strong>TypeScript SDK for Aligned Layer</strong>
+<h1>Aligned TS viem</h1>
+<strong>TypeScript SDK for Aligned Layer usin viem</strong>
 </div>
 <br>
 
-Aligned TS is the TypeScript equivalent of the Aligned Layer Rust SDK.
+Aligned TS viem is the TypeScript equivalent of the Aligned Layer Rust SDK using viem. It's a fork of [aligned-ts](https://github.com/Trivo25/aligned-ts), but replacing ethers with viem.
 
-## Table of Contents
+<!-- ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
@@ -197,4 +197,4 @@ console.log(Alignment.getExplorerLink(alignedData[0].batchMerkleRoot));
 // > https://explorer.alignedlayer.com/batches 0x065f95c19a9c0ccac97c482a864cab41db6a9d0b1652ccfad96d182df5d0ec73
 ```
 
-For more examples take a look at the [tests](./tests/) folder!
+For more examples take a look at the [tests](./tests/) folder! -->
