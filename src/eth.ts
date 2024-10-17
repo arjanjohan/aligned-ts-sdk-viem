@@ -1,5 +1,5 @@
-import { ethers } from "ethers";
 import ContractAbi from "../abi/AlignedLayerServiceManager.json" with { type: "json" };
+import { getContract, PublicClient } from 'viem'
 import { AlignedVerificationData } from "./types.js";
 
 export { verifyProofOnchain };
@@ -7,32 +7,32 @@ export { verifyProofOnchain };
 const verifyProofOnchain = async (
   verificationData: AlignedVerificationData,
   chain: "devnet" | "holesky" = "holesky",
-  provider: ethers.Provider
+  provider: PublicClient
 ) => {
   const contractAddress =
     chain === "devnet"
       ? "0x1613beB3B2C4f22Ee086B2b38C1476A3cE7f78E8"
       : "0x58F280BeBE9B34c9939C3C39e0890C81f163B623";
-  const contract = new ethers.Contract(
-    contractAddress,
-    ContractAbi.abi,
-    provider
-  );
-  const verifyBatchInclusion = await contract.getFunction(
-    "verifyBatchInclusion"
-  );
+  
+  const contract = getContract({
+    address: contractAddress,
+    abi: ContractAbi.abi,
+    // 1a. Insert a single client
+    client: provider
+  });
 
   const flatMerklePath =
-    verificationData.batchInclusionProof.merkle_path.flat();
+  verificationData.batchInclusionProof.merkle_path.flat();
 
-  const result: boolean = await verifyBatchInclusion.call(
+  
+  const result: boolean = await contract.read.verifyBatchInclusion([
     verificationData.verificationDataCommitment.proofCommitment,
     verificationData.verificationDataCommitment.publicInputCommitment,
     verificationData.verificationDataCommitment.provingSystemAuxDataCommitment,
     verificationData.verificationDataCommitment.proofGeneratorAddr,
     verificationData.batchMerkleRoot,
     flatMerklePath,
-    verificationData.indexInBatch
-  );
+    verificationData.indexInBatch]) as boolean;
+
   return result;
 };
